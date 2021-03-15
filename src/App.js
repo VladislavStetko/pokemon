@@ -2,12 +2,15 @@ import React, {Component} from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import './components/layout/NavBar'
+import './components/layout/NavBar';
+
 import NavBar from './components/layout/NavBar';
 import Dashboard from './components/layout/Dashboard';
-import Pokemon from './components/pokemon/Pokemon'
-import backgroundImage  from './pattern.png'
-import backgroundImage2 from './pattern3.jpg'
+import Pokemon from './components/pokemon/Pokemon';
+
+
+import backgroundImage  from './pattern.png';
+import backgroundImage2 from './pattern3.jpg';
 
 class App extends Component{
   render(){

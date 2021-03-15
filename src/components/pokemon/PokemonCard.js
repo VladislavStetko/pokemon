@@ -3,6 +3,7 @@ import {Link } from 'react-router-dom';
 import styled from 'styled-components';
 import spinner from '../layout/spinner.gif';
 import backgroundImage from './pattern2.jpg';
+import axios from 'axios'
 
 const TYPE_COLORS = {
     bug: 'B1C12E',
@@ -66,7 +67,8 @@ state={
     name:'',
     imageUrl:'',
     pokemonIndex:'',
-}
+    imageBackUrl:''
+};
 
 
 
@@ -76,16 +78,16 @@ componentDidMount(){
     const {name,url} = this.props;
     const pokemonIndex = url.split('/')[url.split('/').length-2];
     const imageUrl = `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonIndex}.png?raw=true`;
-    
+    const imageBackUrl =`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${pokemonIndex}.png`;
 
     //Внесення даних
     this.setState({
-        name, 
-        imageUrl,
-        pokemonIndex,
-        imageLoading :true,
-        toManyRequests:false
+       name,
+       imageUrl,
+       pokemonIndex,
+       imageBackUrl
     })
+
 }
 
     render() {
