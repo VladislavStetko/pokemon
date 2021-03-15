@@ -5,13 +5,17 @@ import axios from 'axios';
 export default class PokemonList extends Component {
     state = {
         //Посилання на JSON файл покемонів, лімітом можна змінювати кількість покемонів
-        url:"https://pokeapi.co/api/v2/pokemon?limit=1000",
+        url:`https://pokeapi.co/api/v2/pokemon?limit=${this.props.pages}`,
         pokemon:null
     }
     //За допомогою асинхронності вносимо список покемонів в змінну
     async componentDidMount(){
+        
         const res = await axios.get(this.state.url);
-        this.setState({pokemon:res.data['results']});
+        this.setState({
+            pokemon:res.data['results']
+        
+        });
     }
     render() {
         return (

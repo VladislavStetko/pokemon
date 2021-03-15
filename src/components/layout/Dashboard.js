@@ -6,9 +6,17 @@ import Pagination from "./Pagination";
 
 export default class Dashboard extends Component {
   
+  constructor(props){
+    super(props);
+    this.state={
+      countOfPages:''
+    };
+    this.handleSelect=this.handleSelect.bind(this);
+  }
 
-   
-  
+  handleSelect(e){
+    this.setState({countOfPages:e.eventKey})
+  }
 
   render() {
     return (
@@ -20,7 +28,7 @@ export default class Dashboard extends Component {
               alignRight
               title="Кількість покемонів"
               id="dropdown-menu-align-right"
-              //onSelect={handleSelect}
+              onSelect={this.handleSelect}
             >
               <Dropdown.Item eventKey="10">10</Dropdown.Item>
               <Dropdown.Item eventKey="20">20</Dropdown.Item>
@@ -42,12 +50,12 @@ export default class Dashboard extends Component {
         </div>
         <div className="row">
           <div className="col">
-            <PokemonList />
+            <PokemonList pages={42} />
           </div>
         </div>
         <div className="row">
           <div className="col-md-12 d-flex justify-content-center">
-            <Pagination/>
+            <Pagination page={10}/>
           </div>
         </div>
       </>

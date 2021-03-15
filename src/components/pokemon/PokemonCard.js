@@ -66,8 +66,7 @@ export default class PokemonCard extends Component {
 state={
     name:'',
     imageUrl:'',
-    pokemonIndex:'',
-    imageBackUrl:''
+    pokemonIndex:''
 };
 
 
@@ -78,14 +77,12 @@ componentDidMount(){
     const {name,url} = this.props;
     const pokemonIndex = url.split('/')[url.split('/').length-2];
     const imageUrl = `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonIndex}.png?raw=true`;
-    const imageBackUrl =`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${pokemonIndex}.png`;
 
     //Внесення даних
     this.setState({
        name,
        imageUrl,
-       pokemonIndex,
-       imageBackUrl
+       pokemonIndex
     })
 
 }
