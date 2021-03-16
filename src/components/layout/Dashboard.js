@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState,useEffect } from "react";
 import PokemonList from "../pokemon/PokemonList";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -9,7 +9,7 @@ function Dashboard() {
 
   const handleSelect = (e) => {
     setValue(e);
-  };
+  } 
 
   return (
     <>
