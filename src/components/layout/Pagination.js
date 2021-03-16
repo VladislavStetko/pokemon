@@ -1,27 +1,29 @@
 import React, { Component } from "react";
 
-function Pagination({page}) {
+export default function Pagination({ gotoNext, gotoPrev, page }) {
   return (
     <>
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
-            <a class="page-link" href="#">
-              Previous
-            </a>
+            {gotoPrev && (
+              <button class="page-link" onClick={gotoPrev}>
+                Попередня
+              </button>
+            )}
           </li>
           <li class="page-item">
-            <span className="page-link">{page}</span>
+            <span className="page-link">{page/20+1}</span>
           </li>
           <li class="page-item">
-            <a class="page-link" href="#">
-              Next
-            </a>
+            {gotoNext && (
+              <button class="page-link" onClick={gotoNext}>
+                Наступна
+              </button>
+            )}
           </li>
         </ul>
       </nav>
     </>
   );
 }
-
-export default Pagination

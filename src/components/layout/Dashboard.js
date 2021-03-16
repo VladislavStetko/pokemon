@@ -1,4 +1,4 @@
-import React, { Component, useState,useEffect } from "react";
+import React, { Component, useState, useEffect } from "react";
 import PokemonList from "../pokemon/PokemonList";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -6,6 +6,7 @@ import Pagination from "./Pagination";
 
 function Dashboard() {
   const [value, setValue] = useState();
+
   const handleSelect = (e) => {
     setValue(e);
   };
@@ -47,11 +48,6 @@ function Dashboard() {
       <div className="row">
         <div className="col">
           <PokemonList pages={value} />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-12 d-flex justify-content-center">
-          <Pagination page={10} />
         </div>
       </div>
     </>
