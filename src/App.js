@@ -12,8 +12,9 @@ import Pokemon from './components/pokemon/Pokemon';
 import backgroundImage  from './pattern.png';
 import backgroundImage2 from './pattern3.jpg';
 
-class App extends Component{
-  render(){
+
+
+function App (){
     return(
       <Router>
       <div className="App" style={{background:`url(${backgroundImage2})`}}>
@@ -27,7 +28,6 @@ class App extends Component{
       </div>
       </Router>
     )
-  }
 }
 
 export default App;
