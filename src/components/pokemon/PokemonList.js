@@ -2,15 +2,25 @@ import React, { Component, useState, useEffect } from "react";
 import PokemonCard from "./PokemonCard";
 import axios from "axios";
 import Pagination from "../layout/Pagination";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
 
-function PokemonList({ pages }) {
+function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
   const [currPage, setCurrPage] = useState(
-    `https://pokeapi.co/api/v2/pokemon?offset=0&limit=${pages}`
+    `https://pokeapi.co/api/v2/pokemon?offset=0&limit=0`
   );
   const [nextPage, setNextPage] = useState();
   const [prevPage, setPrevPage] = useState();
   const [pageNum, setPageNum] = useState(0);
+  const [filter, setFilter] = useState("");
+
+  const handleChange = (e) => {
+    setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=${pageNum}&limit=${e}`)
+  };
+  const handleSearch = (e) => {
+    setFilter(e.target.value.toLowerCase());
+  };
 
   useEffect(() => {
     let cancel;
@@ -47,9 +57,59 @@ function PokemonList({ pages }) {
 
   return (
     <React.Fragment>
+      <div className="row mb-2">
+        <div className="col-md-3 mx-auto">
+          <DropdownButton
+            variant="danger"
+            alignRight
+            title="Кількість покемонів"
+            id="dropdown-menu-align-right"
+            onSelect={handleChange}
+          >
+            <Dropdown.Item eventKey="10" value="10">
+              10
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="20" value="20">
+              20
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="30" value="30">
+              30
+            </Dropdown.Item>
+          </DropdownButton>
+        </div>
+        <div className="col-md-3 mx-auto">
+          <DropdownButton
+            variant="danger"
+            alignRight
+            title="Кількість покемонів"
+            id="dropdown-menu-align-right"
+          >
+            <Dropdown.Item eventKey="10" value="10">
+              10
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="20" value="20">
+              20
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="30" value="30">
+              30
+            </Dropdown.Item>
+          </DropdownButton>
+        </div>
+        <div className="col-md-3 mx-auto">
+          <form className="form-inline my-2 my-lg-0">
+            <input
+              onChange={handleSearch}
+              class="form-control mr-sm-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </form>
+        </div>
+      </div>
       {pokemonList ? (
         <div className="row">
-          {pokemonList.map((pokemon, index) => (
+          {pokemonList.map((pokemon, index) => (pokemonList[index].name.includes(filter)&&
             <PokemonCard
               key={pokemon.name}
               name={pokemon.name}

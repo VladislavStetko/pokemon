@@ -82,8 +82,8 @@ export default class PokemonCard extends Component {
       imageUrl,
       pokemonIndex,
       types,
-      imageLoading :true,
-      toManyRequests:false
+      imageLoading: true,
+      toManyRequests: false,
     });
   }
 
@@ -92,58 +92,62 @@ export default class PokemonCard extends Component {
       <div className="col-md-3 col-sm-6 mb-5">
         <StyledLink to={`pokemon/${this.state.pokemonIndex}`}>
           <Card className="card">
-          {this.state.imageLoading ? (
+            <div className="card-header">
+              <div>
+                <span className="badge badge-info mr-2">
+                  {this.state.pokemonIndex}
+                </span>
+                <span className="h6">
+                  {this.state.name
+                    .toLowerCase()
+                    .split(" ")
+                    .map(
+                      (letter) =>
+                        letter.charAt(0).toUpperCase() + letter.substring(1)
+                    )
+                    .join(" ")}
+                </span>
+              </div>
+            </div>
+            {this.state.imageLoading ? (
               <img
                 src={spinner}
                 style={{ width: "5em", height: "5em" }}
                 className="card-img-top rounded mx-auto d-block mt-2"
               />
             ) : null}
-             <Sprite 
-                       className="card-img-top ronded mx-auto mt-2"
-                       src={this.state.imageUrl}
-                       onLoad={()=>this.setState({imageLoading: false})}
-                       onError={()=> this.setState({toManyRequests:true})}
-                       style={this.state.toManyRequests?{display:"none"}:
-                       this.state.imageLoading?null:{display:"block"}}
-                       />
-            <div className="card-header">
-              <span className="badge badge-ibfo mr-2">
-                {this.state.pokemonIndex}
-              </span>
-              <span className="h6">
-                {this.state.name
-                  .toLowerCase()
-                  .split(" ")
-                  .map(
-                    (letter) =>
-                      letter.charAt(0).toUpperCase() + letter.substring(1)
-                  )
-                  .join(" ")}
-              </span>
-            </div>
-
-            <div>
-                  <span>
-                    {this.state.types.map((type) => (
-                      <span
-                        key={type}
-                        className="badge badge-primary badge-pill mr-1"
-                        style={{
-                          backgroundColor: `#${TYPE_COLORS[type]}`,
-                          color: "white",
-                        }}
-                      >
-                        {type
-                          .toLowerCase()
-                          .split(" ")
-                          .map(
-                            (s) => s.charAt(0).toUpperCase() + s.substring(1)
-                          )
-                          .join(" ")}
-                      </span>
-                    ))}
-                  </span>
+            <Sprite
+              className="card-img-top ronded mx-auto mt-2"
+              src={this.state.imageUrl}
+              onLoad={() => this.setState({ imageLoading: false })}
+              onError={() => this.setState({ toManyRequests: true })}
+              style={
+                this.state.toManyRequests
+                  ? { display: "none" }
+                  : this.state.imageLoading
+                  ? null
+                  : { display: "block" }
+              }
+            />
+            <div className="card-footer">
+                <span>
+                  {this.state.types.map((type) => (
+                    <span
+                      key={type}
+                      className="badge badge-primary badge-pill mr-1"
+                      style={{
+                        backgroundColor: `#${TYPE_COLORS[type]}`,
+                        color: "white",
+                      }}
+                    >
+                      {type
+                        .toLowerCase()
+                        .split(" ")
+                        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                        .join(" ")}
+                    </span>
+                  ))}
+                </span>
             </div>
           </Card>
         </StyledLink>
