@@ -9,8 +9,8 @@ function Dashboard() {
 
   const handleSelect = (e) => {
     setValue(e);
-  } 
-
+  }
+ 
   return (
     <>
       <div className="row mb-2 ">
