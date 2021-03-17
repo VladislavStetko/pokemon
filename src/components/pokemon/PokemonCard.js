@@ -129,7 +129,7 @@ export default class PokemonCard extends Component {
                   : { display: "block" }
               }
             />
-            <div className="card-footer">
+            <div className="card-footer ">
                 <span>
                   {this.state.types.map((type) => (
                     <span

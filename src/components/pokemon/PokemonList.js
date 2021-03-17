@@ -16,10 +16,15 @@ function PokemonList() {
   const [filter, setFilter] = useState("");
 
   const handleChange = (e) => {
-    setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=${pageNum}&limit=${e}`)
+    setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=${pageNum}&limit=${e}`);
   };
   const handleSearch = (e) => {
-    setFilter(e.target.value.toLowerCase());
+    if(e===""){
+
+    }else{
+      setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=1000`);
+      setFilter(e.target.value.toLowerCase());
+    }
   };
 
   useEffect(() => {

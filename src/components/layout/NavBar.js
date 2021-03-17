@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React from "react";
 
-const NavBarStyle = styled.nav``;
+import './style.scss';
+
 
 function NavBar() {
   return (
