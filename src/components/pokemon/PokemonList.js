@@ -45,13 +45,6 @@ function PokemonList({ pages }) {
     setPageNum(stringWork(prevPage));
   }
 
-  //   state = {
-  //     //Посилання на JSON файл покемонів, лімітом можна змінювати кількість покемонів
-  //     url: `https://pokeapi.co/api/v2/pokemon?limit=${this.props.pages}`,
-  //     pokemon: null,
-  //   };
-  //За допомогою асинхронності вносимо список покемонів в змінну
-
   return (
     <React.Fragment>
       {pokemonList ? (
