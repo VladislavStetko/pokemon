@@ -9,7 +9,6 @@ import Dashboard from './components/layout/Dashboard';
 import Pokemon from './components/pokemon/Pokemon';
 
 
-import backgroundImage  from './pattern.png';
 import backgroundImage2 from './pattern3.jpg';
 
 

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import spinner from "../layout/spinner.gif";
-import backgroundImage from "./pattern2.jpg";
 import axios from "axios";
 
 const TYPE_COLORS = {
