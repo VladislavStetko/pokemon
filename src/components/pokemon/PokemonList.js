@@ -2,42 +2,41 @@ import React, { Component, useState, useEffect } from "react";
 import PokemonCard from "./PokemonCard";
 import axios from "axios";
 import Pagination from "../layout/Pagination";
-import TypeClass from './TypeClass';
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Form } from "react-bootstrap";
-import '../layout/style.scss';
+import "../layout/style.scss";
 
 const types = [
-  "bug", 
-  "dark",
-  "dragon",
-  "electric",
-  "fairy",
-  "fighting",
-  "fire",
-  "flying",
-  "ghost",
-  "grass",
-  "ground",
-  "ice",
-  "normal",
-  "poison",
-  "psychic",
-  "rock",
-  "steel",
-  "water"
+  {name:"normal",index:1},
+  {name:"fighting",index:2},
+  {name:"flying",index:3},
+  {name:"poison",index:4},
+  {name:"ground",index:5},
+  {name:"rock",index:6},
+  {name:"bug", index:7},
+  {name:"ghost",index:8},
+  {name:"steel",index:9},
+  {name:"fire",index:10},
+  {name:"water",index:11},
+  {name:"grass",index:12},
+  {name:"electric",index:13},
+  {name:"psychic",index:14},
+  {name:"ice",index:15},
+  {name:"dragon",index:16},
+  {name:"dark",index:17},
+  {name:"fairy",index:18},
 ];
 
 function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
-  const [currPage, setCurrPage] = useState(
-    `https://pokeapi.co/api/v2/pokemon?limit=100`
-  );
+
+  const [currPage, setCurrPage] = useState(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`);
   const [nextPage, setNextPage] = useState();
   const [prevPage, setPrevPage] = useState();
   const [pageNum, setPageNum] = useState(0);
   const [filter, setFilter] = useState("");
+  const [triggerType, setTriggerType] = useState(false);
 
   const handleChange = (e) => {
     setCurrPage(
@@ -45,17 +44,22 @@ function PokemonList() {
     );
   };
 
-  const checkChange = (e) =>{
+  const checkChange = (e) => {
     const { target } = e;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    if(value){
-      console.log(<TypeClass type={1}/>)
-    }else{
-      console.log("loh");
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    if (value) {
+      setCurrPage(`https://pokeapi.co/api/v2/type/${e.target.id}`);
+      //setPokemonList(pokemonList.pokemon);
+      console.log(e.target.id);
     }
-  }
+  };
   const handleSearch = (e) => {
-    
+    if (e.target.value == " ") {
+      setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=10`);
+    } else {
+      setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=1000`);
+      setFilter(e.target.value.toLowerCase());
+    }
   };
 
   useEffect(() => {
@@ -65,10 +69,13 @@ function PokemonList() {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
       .then((res) => {
-        console.log(res.data.results);
-        setPokemonList(res.data.results);
-        setPrevPage(res.data.previous);
-        setNextPage(res.data.next);
+        if (triggerType) {
+          setPokemonList(res.data.pokemon);
+        } else {
+          setPokemonList(res.data.results);
+          setPrevPage(res.data.previous);
+          setNextPage(res.data.next);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -115,24 +122,6 @@ function PokemonList() {
           </DropdownButton>
         </div>
         <div className="col-md-3 mx-auto">
-          <DropdownButton
-            variant="danger"
-            alignRight
-            title="Кількість покемонів"
-            id="dropdown-menu-align-right"
-          >
-            <Dropdown.Item eventKey="10" value="10">
-              10
-            </Dropdown.Item>
-            <Dropdown.Item eventKey="20" value="20">
-              20
-            </Dropdown.Item>
-            <Dropdown.Item eventKey="30" value="30">
-              30
-            </Dropdown.Item>
-          </DropdownButton>
-        </div>
-        <div className="col-md-3 mx-auto">
           <form className="form-inline my-2 my-lg-0">
             <input
               onChange={handleSearch}
@@ -148,21 +137,28 @@ function PokemonList() {
         <div className="col-md-12">
           <Form className="d-flex justify-content-center flex-wrap">
             {types.map((type) => (
-                <Form.Check
-                  key={type}
-                  inline
-                  label={type}
-                  type="checkbox"
-                  id={type}
-                  onChange={checkChange}
-                />
+              <Form.Check
+                key={type.name}
+                inline
+                label={type.name}
+                type="checkbox"
+                id={type.index}
+                onChange={checkChange}
+              />
             ))}
           </Form>
         </div>
       </div>
       {pokemonList ? (
         <div className="row">
-          {pokemonList.map(
+          {pokemonList.map((pokemon) => (
+            <PokemonCard
+              key={pokemon.pokemon.name}
+              name={pokemon.pokemon.name}
+              url={pokemon.pokemon.url}
+            />
+          ))}
+          {/* {pokemonList.map(
             (pokemon, index) =>
               pokemonList[index].name.includes(filter) && (
                 <PokemonCard
@@ -171,7 +167,7 @@ function PokemonList() {
                   url={pokemon.url}
                 />
               )
-          )}
+          )} */}
         </div>
       ) : (
         <h1>Loading Pokemon</h1>
