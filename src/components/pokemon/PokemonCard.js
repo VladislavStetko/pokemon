@@ -73,7 +73,7 @@ export default class PokemonCard extends Component {
     const { name, url } = this.props;
     const pokemonIndex = url.split("/")[url.split("/").length - 2];
     const pokemonRes = await axios.get(url);
-    const imageUrl = pokemonRes.data.sprites.front_default;
+    const imageUrl = `https://pokeres.bastionbot.org/images/pokemon/${pokemonIndex}.png`;
     const types = pokemonRes.data.types.map((type) => type.type.name);
     //Внесення даних
     this.setState({

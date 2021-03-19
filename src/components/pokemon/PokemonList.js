@@ -30,7 +30,6 @@ const types = [
 
 function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
-
   const [currPage, setCurrPage] = useState(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`);
   const [nextPage, setNextPage] = useState();
   const [prevPage, setPrevPage] = useState();
@@ -151,14 +150,14 @@ function PokemonList() {
       </div>
       {pokemonList ? (
         <div className="row">
-          {pokemonList.map((pokemon) => (
+          {/* {pokemonList.map((pokemon) => (
             <PokemonCard
               key={pokemon.pokemon.name}
               name={pokemon.pokemon.name}
               url={pokemon.pokemon.url}
             />
-          ))}
-          {/* {pokemonList.map(
+          ))} */}
+          {pokemonList.map(
             (pokemon, index) =>
               pokemonList[index].name.includes(filter) && (
                 <PokemonCard
@@ -167,7 +166,7 @@ function PokemonList() {
                   url={pokemon.url}
                 />
               )
-          )} */}
+          )}
         </div>
       ) : (
         <h1>Loading Pokemon</h1>
