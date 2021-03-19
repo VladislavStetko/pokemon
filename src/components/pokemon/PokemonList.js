@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from "react";
 import PokemonCard from "./PokemonCard";
 import axios from "axios";
 import Pagination from "../layout/Pagination";
+import TypeClass from './TypeClass';
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Form } from "react-bootstrap";
@@ -30,9 +31,8 @@ const types = [
 
 function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
-
   const [currPage, setCurrPage] = useState(
-    `https://pokeapi.co/api/v2/pokemon?offset=0&limit=0`
+    `https://pokeapi.co/api/v2/pokemon?limit=100`
   );
   const [nextPage, setNextPage] = useState();
   const [prevPage, setPrevPage] = useState();
@@ -49,17 +49,13 @@ function PokemonList() {
     const { target } = e;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     if(value){
-      
-    console.log(e.target.id);
+      console.log(<TypeClass type={1}/>)
+    }else{
+      console.log("loh");
     }
   }
   const handleSearch = (e) => {
-    if (e.target.value == " ") {
-      setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=10`);
-    } else {
-      setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=1000`);
-      setFilter(e.target.value.toLowerCase());
-    }
+    
   };
 
   useEffect(() => {
@@ -69,6 +65,7 @@ function PokemonList() {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
       .then((res) => {
+        console.log(res.data.results);
         setPokemonList(res.data.results);
         setPrevPage(res.data.previous);
         setNextPage(res.data.next);
@@ -152,6 +149,7 @@ function PokemonList() {
           <Form className="d-flex justify-content-center flex-wrap">
             {types.map((type) => (
                 <Form.Check
+                  key={type}
                   inline
                   label={type}
                   type="checkbox"

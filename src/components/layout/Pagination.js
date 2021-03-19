@@ -4,20 +4,20 @@ export default function Pagination({ gotoNext, gotoPrev, page }) {
   return (
     <>
       <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item">
+        <ul className="pagination">
+          <li className="page-item">
             {gotoPrev && (
-              <button class="page-link" onClick={gotoPrev}>
+              <button className="page-link" onClick={gotoPrev}>
                 Попередня
               </button>
             )}
           </li>
-          <li class="page-item">
+          <li className="page-item">
             <span className="page-link">{page/20+1}</span>
           </li>
-          <li class="page-item">
+          <li className="page-item">
             {gotoNext && (
-              <button class="page-link" onClick={gotoNext}>
+              <button className="page-link" onClick={gotoNext}>
                 Наступна
               </button>
             )}
