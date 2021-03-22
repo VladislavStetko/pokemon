@@ -35,7 +35,8 @@ function PokemonList() {
   const [prevPage, setPrevPage] = useState();
   const [pageNum, setPageNum] = useState(0);
   const [filter, setFilter] = useState("");
-  const [triggerType, setTriggerType] = useState(false);
+
+  const typesArray =[];
 
   const handleChange = (e) => {
     setCurrPage(
@@ -43,15 +44,15 @@ function PokemonList() {
     );
   };
 
-  const checkChange = (e) => {
-    const { target } = e;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    if (value) {
-      setCurrPage(`https://pokeapi.co/api/v2/type/${e.target.id}`);
-      //setPokemonList(pokemonList.pokemon);
-      console.log(e.target.id);
-    }
-  };
+  // const checkChange = (e) => {
+  //   const { target } = e;
+  //   const value = target.type === "checkbox" ? target.checked : target.value;
+  //   if (value) {
+  //     typesArray.push(e.target.id);
+  //     setCurrPage(`https://pokeapi.co/api/v2/type/${e.target.id}`);
+  //     console.log(e.target.id);
+  //   }
+  // };
   const handleSearch = (e) => {
     if (e.target.value == " ") {
       setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=10`);
@@ -68,14 +69,11 @@ function PokemonList() {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
       .then((res) => {
-        if (triggerType) {
-          setPokemonList(res.data.pokemon);
-        } else {
           setPokemonList(res.data.results);
           setPrevPage(res.data.previous);
           setNextPage(res.data.next);
-        }
-      })
+      }
+      )
       .catch((error) => {
         console.log(error);
       });
@@ -115,8 +113,8 @@ function PokemonList() {
             <Dropdown.Item eventKey="20" value="20">
               20
             </Dropdown.Item>
-            <Dropdown.Item eventKey="30" value="30">
-              30
+            <Dropdown.Item eventKey="50" value="50">
+              50
             </Dropdown.Item>
           </DropdownButton>
         </div>
@@ -132,7 +130,7 @@ function PokemonList() {
           </form>
         </div>
       </div>
-      <div className="row types-checks">
+      {/* <div className="row types-checks">
         <div className="col-md-12">
           <Form className="d-flex justify-content-center flex-wrap">
             {types.map((type) => (
@@ -147,20 +145,14 @@ function PokemonList() {
             ))}
           </Form>
         </div>
-      </div>
+      </div> */}
       {pokemonList ? (
         <div className="row">
-          {/* {pokemonList.map((pokemon) => (
-            <PokemonCard
-              key={pokemon.pokemon.name}
-              name={pokemon.pokemon.name}
-              url={pokemon.pokemon.url}
-            />
-          ))} */}
           {pokemonList.map(
             (pokemon, index) =>
-              pokemonList[index].name.includes(filter) && (
-                <PokemonCard
+              pokemonList[index].name.includes(filter) && 
+              (
+                  <PokemonCard
                   key={pokemon.name}
                   name={pokemon.name}
                   url={pokemon.url}
@@ -176,7 +168,6 @@ function PokemonList() {
           <Pagination
             gotoNext={nextPage ? gotoNext : null}
             gotoPrev={prevPage ? gotoPrev : null}
-            page={pageNum}
           />
         </div>
       </div>

@@ -59,7 +59,7 @@ export default class Pokemon extends Component {
         const pokemonRes = await axios.get(pokemonUrl);
 
         const name = pokemonRes.data.name;
-        const imageUrl = pokemonRes.data.sprites.front_default;
+        const imageUrl = `https://pokeres.bastionbot.org/images/pokemon/${pokemonIndex}.png`;
 
         let {hp, attack, defense, speed, specialAttack, specialDefense} = '';
         pokemonRes.data.stats.map(stat=>{

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default function Pagination({ gotoNext, gotoPrev, page }) {
+export default function Pagination({ gotoNext, gotoPrev}) {
   return (
     <>
       <nav aria-label="Page navigation example">
@@ -12,9 +12,9 @@ export default function Pagination({ gotoNext, gotoPrev, page }) {
               </button>
             )}
           </li>
-          <li className="page-item">
-            <span className="page-link">{page/20+1}</span>
-          </li>
+          {/* <li className="page-item">
+            <span className="page-link">{page/count+1}</span>
+          </li> */}
           <li className="page-item">
             {gotoNext && (
               <button className="page-link" onClick={gotoNext}>

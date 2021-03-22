@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import spinner from "../layout/spinner.gif";
 import axios from "axios";
+import "./card.scss";
 
 const TYPE_COLORS = {
   bug: "B1C12E",
@@ -90,45 +91,47 @@ export default class PokemonCard extends Component {
     return (
       <div className="col-md-3 col-sm-6 mb-5">
         <StyledLink to={`pokemon/${this.state.pokemonIndex}`}>
-          <Card className="card">
-            <div className="card-header">
-              <div>
-                <span className="badge badge-info mr-2">
-                  {this.state.pokemonIndex}
-                </span>
-                <span className="h6">
-                  {this.state.name
-                    .toLowerCase()
-                    .split(" ")
-                    .map(
-                      (letter) =>
-                        letter.charAt(0).toUpperCase() + letter.substring(1)
-                    )
-                    .join(" ")}
-                </span>
+          <Card className="card"
+          >
+            <div className="front">
+              <div className="card-header">
+                <div>
+                  <span className="badge badge-info mr-2">
+                    {this.state.pokemonIndex}
+                  </span>
+                  <span className="h6">
+                    {this.state.name
+                      .toLowerCase()
+                      .split(" ")
+                      .map(
+                        (letter) =>
+                          letter.charAt(0).toUpperCase() + letter.substring(1)
+                      )
+                      .join(" ")}
+                  </span>
+                </div>
               </div>
-            </div>
-            {this.state.imageLoading ? (
-              <img
-                src={spinner}
-                style={{ width: "5em", height: "5em" }}
-                className="card-img-top rounded mx-auto d-block mt-2"
+              {this.state.imageLoading ? (
+                <img
+                  src={spinner}
+                  style={{ width: "5em", height: "5em" }}
+                  className="card-img-top rounded mx-auto d-block mt-2"
+                />
+              ) : null}
+              <Sprite
+                className="card-img-top ronded mx-auto mt-2"
+                src={this.state.imageUrl}
+                onLoad={() => this.setState({ imageLoading: false })}
+                onError={() => this.setState({ toManyRequests: true })}
+                style={
+                  this.state.toManyRequests
+                    ? { display: "none" }
+                    : this.state.imageLoading
+                    ? null
+                    : { display: "block" }
+                }
               />
-            ) : null}
-            <Sprite
-              className="card-img-top ronded mx-auto mt-2"
-              src={this.state.imageUrl}
-              onLoad={() => this.setState({ imageLoading: false })}
-              onError={() => this.setState({ toManyRequests: true })}
-              style={
-                this.state.toManyRequests
-                  ? { display: "none" }
-                  : this.state.imageLoading
-                  ? null
-                  : { display: "block" }
-              }
-            />
-            <div className="card-footer ">
+              <div className="card-footer ">
                 <span>
                   {this.state.types.map((type) => (
                     <span
@@ -147,7 +150,10 @@ export default class PokemonCard extends Component {
                     </span>
                   ))}
                 </span>
+              </div>
             </div>
+
+            <div className="back"></div>
           </Card>
         </StyledLink>
       </div>
