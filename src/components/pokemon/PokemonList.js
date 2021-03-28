@@ -6,37 +6,41 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Form } from "react-bootstrap";
 import "../layout/style.scss";
+import PokemonTypes from "./PokemonTypes";
 
 const types = [
-  {name:"normal",index:1},
-  {name:"fighting",index:2},
-  {name:"flying",index:3},
-  {name:"poison",index:4},
-  {name:"ground",index:5},
-  {name:"rock",index:6},
-  {name:"bug", index:7},
-  {name:"ghost",index:8},
-  {name:"steel",index:9},
-  {name:"fire",index:10},
-  {name:"water",index:11},
-  {name:"grass",index:12},
-  {name:"electric",index:13},
-  {name:"psychic",index:14},
-  {name:"ice",index:15},
-  {name:"dragon",index:16},
-  {name:"dark",index:17},
-  {name:"fairy",index:18},
+  { name: "normal", index: 1 },
+  { name: "fighting", index: 2 },
+  { name: "flying", index: 3 },
+  { name: "poison", index: 4 },
+  { name: "ground", index: 5 },
+  { name: "rock", index: 6 },
+  { name: "bug", index: 7 },
+  { name: "ghost", index: 8 },
+  { name: "steel", index: 9 },
+  { name: "fire", index: 10 },
+  { name: "water", index: 11 },
+  { name: "grass", index: 12 },
+  { name: "electric", index: 13 },
+  { name: "psychic", index: 14 },
+  { name: "ice", index: 15 },
+  { name: "dragon", index: 16 },
+  { name: "dark", index: 17 },
+  { name: "fairy", index: 18 },
 ];
 
 function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
-  const [currPage, setCurrPage] = useState(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`);
+  const [currPage, setCurrPage] = useState(
+  );
   const [nextPage, setNextPage] = useState();
   const [prevPage, setPrevPage] = useState();
   const [pageNum, setPageNum] = useState(0);
   const [filter, setFilter] = useState("");
 
-  const typesArray =[];
+  const [typesArray, setTypesArray] = useState([]);
+
+  const tmpType = [];
 
   const handleChange = (e) => {
     setCurrPage(
@@ -44,15 +48,17 @@ function PokemonList() {
     );
   };
 
-  // const checkChange = (e) => {
-  //   const { target } = e;
-  //   const value = target.type === "checkbox" ? target.checked : target.value;
-  //   if (value) {
-  //     typesArray.push(e.target.id);
-  //     setCurrPage(`https://pokeapi.co/api/v2/type/${e.target.id}`);
-  //     console.log(e.target.id);
-  //   }
-  // };
+  const checkChange = (e) => {
+    const { target } = e;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    if (value) {
+      tmpType.push(e.target.id);
+      console.log(tmpType)
+    } else {
+      let ind = typesArray.indexOf(e.target.id);
+      tmpType.splice(ind, 1);
+    }
+  };
   const handleSearch = (e) => {
     if (e.target.value == " ") {
       setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=10`);
@@ -69,11 +75,10 @@ function PokemonList() {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
       .then((res) => {
-          setPokemonList(res.data.results);
-          setPrevPage(res.data.previous);
-          setNextPage(res.data.next);
-      }
-      )
+        setPokemonList(res.data.results);
+        setPrevPage(res.data.previous);
+        setNextPage(res.data.next);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -130,7 +135,7 @@ function PokemonList() {
           </form>
         </div>
       </div>
-      {/* <div className="row types-checks">
+      <div className="row types-checks">
         <div className="col-md-12">
           <Form className="d-flex justify-content-center flex-wrap">
             {types.map((type) => (
@@ -145,14 +150,13 @@ function PokemonList() {
             ))}
           </Form>
         </div>
-      </div> */}
+      </div>
       {pokemonList ? (
         <div className="row">
           {pokemonList.map(
             (pokemon, index) =>
-              pokemonList[index].name.includes(filter) && 
-              (
-                  <PokemonCard
+              pokemonList[index].name.includes(filter) && (
+                <PokemonCard
                   key={pokemon.name}
                   name={pokemon.name}
                   url={pokemon.url}
@@ -163,6 +167,9 @@ function PokemonList() {
       ) : (
         <h1>Loading Pokemon</h1>
       )}
+      {typesArray ? <div className="row">
+        <PokemonTypes types={typesArray}/>
+      </div> : <h1>Clear List</h1>}
       <div className="row">
         <div className="col-md-12 d-flex justify-content-center">
           <Pagination
