@@ -80,7 +80,8 @@ function PokemonList() {
       })
       .then((res) => {
         if (flag) {
-           setPokemonType(res.data.pokemon);
+           setPokemonList(res.data.pokemon);
+           console.log(pokemonList);
           
         } else {
           setPokemonList(res.data.results);
