@@ -31,8 +31,7 @@ const types = [
 
 function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
-  const [currPage, setCurrPage] = useState(
-  );
+  const [currPage, setCurrPage] = useState();
   const [nextPage, setNextPage] = useState();
   const [prevPage, setPrevPage] = useState();
   const [pageNum, setPageNum] = useState(0);
@@ -53,7 +52,6 @@ function PokemonList() {
     const value = target.type === "checkbox" ? target.checked : target.value;
     if (value) {
       tmpType.push(e.target.id);
-      console.log(tmpType)
     } else {
       let ind = typesArray.indexOf(e.target.id);
       tmpType.splice(ind, 1);
@@ -91,6 +89,9 @@ function PokemonList() {
     const page = string.indexOf("=");
     const amp = string.indexOf("&");
     return string.substr(page + 1, amp - page - 1);
+  }
+  function typesGenerate() {
+    console.log(tmpType);
   }
   function gotoNext() {
     setCurrPage(nextPage);
@@ -149,6 +150,9 @@ function PokemonList() {
               />
             ))}
           </Form>
+          <button onClick={typesGenerate} className="btn btn-primary">
+            Пошук
+          </button>
         </div>
       </div>
       {pokemonList ? (
@@ -167,9 +171,13 @@ function PokemonList() {
       ) : (
         <h1>Loading Pokemon</h1>
       )}
-      {typesArray ? <div className="row">
-        <PokemonTypes types={typesArray}/>
-      </div> : <h1>Clear List</h1>}
+      {typesArray ? (
+        <div className="row">
+          <PokemonTypes types={typesArray} />
+        </div>
+      ) : (
+        <h1>Clear List</h1>
+      )}
       <div className="row">
         <div className="col-md-12 d-flex justify-content-center">
           <Pagination

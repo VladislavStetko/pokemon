@@ -12,9 +12,6 @@ export default function Pagination({ gotoNext, gotoPrev}) {
               </button>
             )}
           </li>
-          {/* <li className="page-item">
-            <span className="page-link">{page/count+1}</span>
-          </li> */}
           <li className="page-item">
             {gotoNext && (
               <button className="page-link" onClick={gotoNext}>

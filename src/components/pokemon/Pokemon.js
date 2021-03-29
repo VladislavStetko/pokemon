@@ -175,8 +175,8 @@ export default class Pokemon extends Component {
     }
     render() {
         return (
-            <div className="col">\
-                <div className="row mb-2">\
+            <div className="col">
+                <div className="row mb-2">
                     <div className="col">
                     </div>
                     <div className="col">
