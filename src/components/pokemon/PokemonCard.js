@@ -92,6 +92,8 @@ export default class PokemonCard extends Component {
       <div className="col-md-3 col-sm-6 mb-5">
         <StyledLink to={`pokemon/${this.state.pokemonIndex}`}>
           <Card className="card"
+
+          
           >
             <div className="front">
               <div className="card-header">
@@ -152,8 +154,6 @@ export default class PokemonCard extends Component {
                 </span>
               </div>
             </div>
-
-            <div className="back"></div>
           </Card>
         </StyledLink>
       </div>

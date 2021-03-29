@@ -6,11 +6,6 @@ function PokemonTypes({types}) {
 
     return (
         <div>
-            {typesArray.map((item)=>(
-                <div>
-                    {item}
-                </div> 
-            ))}
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PokemonCard from "./PokemonCard";
 import axios from "axios";
 import Pagination from "../layout/Pagination";
@@ -7,6 +7,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { Form } from "react-bootstrap";
 import "../layout/style.scss";
 import PokemonTypes from "./PokemonTypes";
+import SearchIcon from "../loupe.png";
 
 const types = [
   { name: "normal", index: 1 },
@@ -31,15 +32,29 @@ const types = [
 
 function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
-  const [currPage, setCurrPage] = useState();
+  const [currPage, setCurrPage] = useState(
+    `https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`
+  );
   const [nextPage, setNextPage] = useState();
   const [prevPage, setPrevPage] = useState();
   const [pageNum, setPageNum] = useState(0);
   const [filter, setFilter] = useState("");
+  const [pokemonTypes, setPokemonTypes] = useState([]);
 
-  const [typesArray, setTypesArray] = useState([]);
+  const [typePage, setTypePage] = useState(`https://pokeapi.co/api/v2/type/`);
 
   const tmpType = [];
+  const snippet = [
+    {
+      name: "bulbasaur",
+      url: `https://pokeapi.co/api/v2/pokemon/1/`
+    },
+    {
+      name: "ivy",
+      url: `https://pokeapi.co/api/v2/pokemon/2/`
+    }
+  ]
+  
 
   const handleChange = (e) => {
     setCurrPage(
@@ -53,17 +68,13 @@ function PokemonList() {
     if (value) {
       tmpType.push(e.target.id);
     } else {
-      let ind = typesArray.indexOf(e.target.id);
+      let ind = tmpType.indexOf(e.target.id);
       tmpType.splice(ind, 1);
     }
   };
   const handleSearch = (e) => {
-    if (e.target.value == " ") {
-      setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=10`);
-    } else {
-      setCurrPage(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=1000`);
-      setFilter(e.target.value.toLowerCase());
-    }
+    setCurrPage("https://pokeapi.co/api/v2/pokemon?offset=0&limit=2000");
+    setFilter(e.target.value.toLowerCase());
   };
 
   useEffect(() => {
@@ -74,6 +85,7 @@ function PokemonList() {
       })
       .then((res) => {
         setPokemonList(res.data.results);
+        console.log(res.data.results);
         setPrevPage(res.data.previous);
         setNextPage(res.data.next);
       })
@@ -90,9 +102,6 @@ function PokemonList() {
     const amp = string.indexOf("&");
     return string.substr(page + 1, amp - page - 1);
   }
-  function typesGenerate() {
-    console.log(tmpType);
-  }
   function gotoNext() {
     setCurrPage(nextPage);
     setPageNum(stringWork(nextPage));
@@ -102,10 +111,22 @@ function PokemonList() {
     setPageNum(stringWork(prevPage));
   }
 
+//Робота з типами
+
+function typesGenerate() {
+  console.log(tmpType);
+ setPokemonList(snippet);
+}
+
+
+
+
+
+
   return (
     <React.Fragment>
       <div className="row mb-2">
-        <div className="col-md-3 mx-auto">
+        <div className="col mx-auto">
           <DropdownButton
             variant="danger"
             alignRight
@@ -124,21 +145,18 @@ function PokemonList() {
             </Dropdown.Item>
           </DropdownButton>
         </div>
-        <div className="col-md-3 mx-auto">
-          <form className="form-inline my-2 my-lg-0">
-            <input
-              onChange={handleSearch}
-              className="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-          </form>
+        <div class="col input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Пошук покемона"
+            onChange={handleSearch}
+          />
         </div>
       </div>
       <div className="row types-checks">
         <div className="col-md-12">
-          <Form className="d-flex justify-content-center flex-wrap">
+          <Form className="d-flex justify-content-center rounded flex-wrap">
             {types.map((type) => (
               <Form.Check
                 key={type.name}
@@ -159,7 +177,8 @@ function PokemonList() {
         <div className="row">
           {pokemonList.map(
             (pokemon, index) =>
-              pokemonList[index].name.includes(filter) && (
+              // pokemonList[index].name.includes(filter)
+               (
                 <PokemonCard
                   key={pokemon.name}
                   name={pokemon.name}
@@ -171,9 +190,9 @@ function PokemonList() {
       ) : (
         <h1>Loading Pokemon</h1>
       )}
-      {typesArray ? (
+      {typePage ? (
         <div className="row">
-          <PokemonTypes types={typesArray} />
+          <PokemonTypes/>
         </div>
       ) : (
         <h1>Clear List</h1>

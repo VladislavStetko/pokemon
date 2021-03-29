@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import './App.scss';
 import './components/layout/NavBar';
 
 import NavBar from './components/layout/NavBar';
@@ -9,14 +9,12 @@ import Dashboard from './components/layout/Dashboard';
 import Pokemon from './components/pokemon/Pokemon';
 
 
-import backgroundImage2 from './pattern3.jpg';
-
 
 
 function App (){
     return(
       <Router>
-      <div className="App" style={{background:`url(${backgroundImage2})`}}>
+      <div className="App">
           <NavBar/>
           <div className="container">
            <Switch>

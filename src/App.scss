@@ -1,0 +1,36 @@
+$background-color: #221f1f;
+$main-color: #e50914;
+$main-back-color: #b81d24;
+$text-color: #f5f5f1;
+
+.App {
+  background-color: $background-color;
+  padding-top: 4rem;
+  min-height: 100vh;
+  .navbar {
+    background-color: $main-color;
+    a {
+      color: $text-color;
+    }
+  }
+  .container{
+      .row{
+          .col{
+              .row{
+                &.types-checks{
+                  border-radius: 5px;
+                  margin: 10px 0;
+                  background-color: $main-back-color;
+                  label{
+                    color:$text-color;
+                  }
+                  button{
+                    background-color: $background-color;
+                    border:0;
+                  }
+                }
+              }
+          }
+      }
+  }
+}
