@@ -7,7 +7,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { Form } from "react-bootstrap";
 import "../layout/style.scss";
 import PokemonTypes from "./PokemonTypes";
-import SearchIcon from "../loupe.png";
 
 const types = [
   { name: "normal", index: 1 },
@@ -31,6 +30,7 @@ const types = [
 ];
 
 function PokemonList() {
+  //Змінні
   const [pokemonList, setPokemonList] = useState([]);
   const [currPage, setCurrPage] = useState(
     `https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`
@@ -39,23 +39,13 @@ function PokemonList() {
   const [prevPage, setPrevPage] = useState();
   const [pageNum, setPageNum] = useState(0);
   const [filter, setFilter] = useState("");
-  const [pokemonTypes, setPokemonTypes] = useState([]);
-
-  const [typePage, setTypePage] = useState(`https://pokeapi.co/api/v2/type/`);
+  const [pokemonType, setPokemonType] = useState([]);
+  const [flag, setFlag] = useState(false);
 
   const tmpType = [];
-  const snippet = [
-    {
-      name: "bulbasaur",
-      url: `https://pokeapi.co/api/v2/pokemon/1/`
-    },
-    {
-      name: "ivy",
-      url: `https://pokeapi.co/api/v2/pokemon/2/`
-    }
-  ]
-  
+  const snippet = [];
 
+  //Події
   const handleChange = (e) => {
     setCurrPage(
       `https://pokeapi.co/api/v2/pokemon?offset=${pageNum}&limit=${e}`
@@ -66,7 +56,12 @@ function PokemonList() {
     const { target } = e;
     const value = target.type === "checkbox" ? target.checked : target.value;
     if (value) {
+      setFlag(true);
       tmpType.push(e.target.id);
+      setCurrPage(`https://pokeapi.co/api/v2/type/${e.target.id}/`);
+      setTimeout(2000);
+      console.log(pokemonType);
+      console.log(tmpType);
     } else {
       let ind = tmpType.indexOf(e.target.id);
       tmpType.splice(ind, 1);
@@ -76,7 +71,7 @@ function PokemonList() {
     setCurrPage("https://pokeapi.co/api/v2/pokemon?offset=0&limit=2000");
     setFilter(e.target.value.toLowerCase());
   };
-
+  //Заповнення даних покемонів
   useEffect(() => {
     let cancel;
     axios
@@ -84,10 +79,15 @@ function PokemonList() {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
       .then((res) => {
-        setPokemonList(res.data.results);
-        console.log(res.data.results);
-        setPrevPage(res.data.previous);
-        setNextPage(res.data.next);
+        if (flag) {
+           setPokemonType(res.data.pokemon);
+          
+        } else {
+          setPokemonList(res.data.results);
+          console.log(res.data.results);
+          setPrevPage(res.data.previous);
+          setNextPage(res.data.next);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -96,7 +96,7 @@ function PokemonList() {
       cancel();
     };
   }, [currPage, pageNum]);
-
+  //Робота з пагінацією
   function stringWork(string) {
     const page = string.indexOf("=");
     const amp = string.indexOf("&");
@@ -111,17 +111,33 @@ function PokemonList() {
     setPageNum(stringWork(prevPage));
   }
 
-//Робота з типами
+  //Робота з типами
+  function typesGenerate() {
+    setFlag(true);
+    setCurrPage(`https://pokeapi.co/api/v2/type/2/`);
+    if(pokemonType){
+    console.log(pokemonType);
+    }else{
+      console.log("W8");
+    }
+  }
 
-function typesGenerate() {
-  console.log(tmpType);
- setPokemonList(snippet);
-}
-
-
-
-
-
+  // useEffect(() => {
+  //   let cancel;
+  //   axios
+  //     .get(typePage, {
+  //       cancelToken: new axios.CancelToken((c) => (cancel = c)),
+  //     })
+  //     .then((res) => {
+  //        setPokemonType(res.data.pokemon);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  //   return () => {
+  //     cancel();
+  //   };
+  // });
 
   return (
     <React.Fragment>
@@ -145,10 +161,10 @@ function typesGenerate() {
             </Dropdown.Item>
           </DropdownButton>
         </div>
-        <div class="col input-group">
+        <div className="col input-group">
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             placeholder="Пошук покемона"
             onChange={handleSearch}
           />
@@ -175,27 +191,17 @@ function typesGenerate() {
       </div>
       {pokemonList ? (
         <div className="row">
-          {pokemonList.map(
-            (pokemon, index) =>
-              // pokemonList[index].name.includes(filter)
-               (
-                <PokemonCard
-                  key={pokemon.name}
-                  name={pokemon.name}
-                  url={pokemon.url}
-                />
-              )
-          )}
+          {pokemonList.map((pokemon, index) => (
+            pokemonList[index].name.includes(filter)&&
+            <PokemonCard
+              key={pokemon.name}
+              name={pokemon.name}
+              url={pokemon.url}
+            />
+          ))}
         </div>
       ) : (
         <h1>Loading Pokemon</h1>
-      )}
-      {typePage ? (
-        <div className="row">
-          <PokemonTypes/>
-        </div>
-      ) : (
-        <h1>Clear List</h1>
       )}
       <div className="row">
         <div className="col-md-12 d-flex justify-content-center">
