@@ -1,30 +1,22 @@
-import React, {Component} from 'react';
-import {HashRouter as Router, Route, Switch} from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
 import './App.scss';
-import './components/layout/NavBar';
+import {Switch, Route, NavLink, Redirect} from "react-router-dom";
+import PokemonList from "./components/pokemon/PokemonList";
+import Pokemon from "./components/pokemon/Pokemon";
 
-import NavBar from './components/layout/NavBar';
-import Dashboard from './components/layout/Dashboard';
-import Pokemon from './components/pokemon/Pokemon';
-
-
-
-
-function App (){
-    return(
-      <Router>
-      <div className="App">
-          <NavBar/>
-          <div className="container">
-           <Switch>
-              <Route exact path="/" component={Dashboard}/>
-              <Route exact path="/pokemon/:pokemonIndex" component={Pokemon}/>
-           </Switch>
-          </div>
-      </div>
-      </Router>
-    )
+function App() {
+  return (
+    <div className="App">
+      <nav>
+        <NavLink to={"/"}>Search</NavLink>
+      </nav>
+      <Switch>
+        <Route path={"/"} exact component={PokemonList} />
+        <Route path={"/pokemon/:pokemon"} exact component={Pokemon} />
+        <Redirect to={"/"} />
+      </Switch>
+    </div>
+  );
 }
 
 export default App;

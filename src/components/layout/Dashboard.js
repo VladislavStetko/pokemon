@@ -1,4 +1,4 @@
-import React, { Component, useState,useEffect } from "react";
+import React from "react";
 import PokemonList from "../pokemon/PokemonList";
 
 function Dashboard() {
@@ -7,7 +7,7 @@ function Dashboard() {
     <>
       <div className="row">
         <div className="col">
-          <PokemonList/>
+          <PokemonList />
         </div>
       </div>
     </>

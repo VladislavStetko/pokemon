@@ -4,7 +4,7 @@ $main-back-color: #b81d24;
 $text-color: #f5f5f1;
 
 .App {
-  background-color: $background-color;
+  background-color: $text-color;
   padding-top: 4rem;
   min-height: 100vh;
   .navbar {
@@ -20,7 +20,7 @@ $text-color: #f5f5f1;
                 &.types-checks{
                   border-radius: 5px;
                   margin: 10px 0;
-                  background-color: $main-back-color;
+                  background-color: $main-color;
                   label{
                     color:$text-color;
                   }
