@@ -2,6 +2,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {GetPokemon} from "../actions/PokemonActions";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 const Pokemon = (props) => {
   const pokemonName = props.pokemon;
@@ -15,27 +16,27 @@ const Pokemon = (props) => {
     if (!_.isEmpty(pokemonState.data[pokemonName])) {
       const pokeData = pokemonState.data[pokemonName];
       return(
-        <div className={"pokemon-wrapper"}>
-          <div className={"item"}>
-            <h1>Sprites</h1>
+        <Link to={`pokemon/${pokeData.name}`}>
+        
+        <div className="card">
+          <div className="card-header">
+            {pokeData.name}
+          </div>
+          <div className="card-img-top rounded mx-auto d-block mt-2">
             <img src={pokeData.sprites.front_default} alt=""/>
-            <img src={pokeData.sprites.back_default} alt=""/>
-            <img src={pokeData.sprites.front_shiny} alt=""/>
-            <img src={pokeData.sprites.back_shiny} alt=""/>
           </div>
           <div className="item">
-            <h1>Stats</h1>
             {pokeData.stats.map(el => {
               return <p>{el.stat.name} {el.base_stat}</p>
             })}
           </div>
           <div className="item">
-            <h1>Abilities</h1>
             {pokeData.abilities.map(el => {
               return <p>{el.ability.name}</p>
             })}
           </div>
         </div>
+        </Link>
       )
     }
 
@@ -51,8 +52,7 @@ const Pokemon = (props) => {
   }
 
   return(
-    <div className={"poke"}>
-      <h1>{pokemonName}</h1>
+    <div className="col-md-3 col-sm-6 mb-5">
       {ShowData()}
     </div>
   )

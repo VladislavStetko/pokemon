@@ -5,7 +5,6 @@ $text-color: #f5f5f1;
 
 .App {
   background-color: $text-color;
-  padding-top: 4rem;
   min-height: 100vh;
   .navbar {
     background-color: $main-color;
@@ -13,24 +12,37 @@ $text-color: #f5f5f1;
       color: $text-color;
     }
   }
-  .container{
-      .row{
-          .col{
-              .row{
-                &.types-checks{
-                  border-radius: 5px;
-                  margin: 10px 0;
-                  background-color: $main-color;
-                  label{
-                    color:$text-color;
-                  }
-                  button{
-                    background-color: $background-color;
-                    border:0;
-                  }
+  .container {
+    .row {
+      .col {
+        .row {
+          div {
+            a {
+              color: $background-color;
+              &:hover{
+                text-decoration: none;
+              }
+              .card{
+                .card-header{
+                  text-transform: capitalize;
                 }
               }
+            }
           }
+          &.types-checks {
+            border-radius: 5px;
+            margin: 10px 0;
+            background-color: $main-color;
+            label {
+              color: $text-color;
+            }
+            button {
+              background-color: $background-color;
+              border: 0;
+            }
+          }
+        }
       }
+    }
   }
 }
