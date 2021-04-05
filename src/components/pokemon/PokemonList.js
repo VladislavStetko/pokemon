@@ -40,11 +40,11 @@ const PokemonList = (props) => {
   const pokemonType = useSelector((state)=>state.PokemonType);
   React.useEffect(() => {
     FetchData(1);
-    FetchType();
+    FetchType("normal");
   }, []);
 
-  const FetchType = (pokemonType) =>{
-    dispatch(GetPokemonType(pokemonType));
+  const FetchType = (pokemonFetchType) =>{
+    dispatch(GetPokemonType(pokemonFetchType));
   }
 
   const FetchData = (page = 1, per = perid) => {
@@ -53,11 +53,6 @@ const PokemonList = (props) => {
 
 
   const ShowData = () => {
-    if(!_.isEmpty(pokemonType.data)){
-      pokemonType.data.map((pkmn)=>{
-        typesArray.push({name:pkmn.pokemon.name, url:pkmn.pokemon.url })
-      })
-    }
     if (pokemonList.loading) {
       return <p>Loading...</p>;
     }
@@ -77,9 +72,9 @@ const PokemonList = (props) => {
     else if (type===true){
       return (
         <div className={"row"}>
-          {typesArray.map((el) => {
+          {pokemonType.data.map((el) => {
             return (
-                  <PokemonCard pokemon={el.name} />
+                  <PokemonCard pokemon={el.pokemon.name} />
             );
           })}
         </div>
@@ -97,7 +92,6 @@ const PokemonList = (props) => {
     <>
       <div className="row mb-2">
         <div className="col-md-6 mx-auto">
-          <p>Search: </p>
           <input type="text" onChange={(e) => setSearch(e.target.value.toLowerCase())} />
           <button onClick={() => props.history.push(`/pokemon/${search}`)}>
             Search
@@ -119,7 +113,7 @@ const PokemonList = (props) => {
           <button 
           onClick={()=>{
             setType(true);
-            FetchType("normal");
+            console.log(pokemonType.data);
           }}>
             Types
           </button>
@@ -160,7 +154,7 @@ const PokemonList = (props) => {
           containerClassName={"pagination"}
         />
       ):(
-        <h2>One Page</h2>
+        <h6>One Page</h6>
       )}
     </>
   );

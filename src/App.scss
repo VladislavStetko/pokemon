@@ -1,10 +1,18 @@
-$background-color: #221f1f;
+$background-color: #202020;
 $main-color: #e50914;
 $main-back-color: #b81d24;
 $text-color: #f5f5f1;
-
+@keyframes cardHover {
+  from{
+    width: 50%;
+  }
+  to{
+    width: 100%;
+  }
+}
 .App {
-  background-color: $text-color;
+  background-color: $background-color;
+
   min-height: 100vh;
   .navbar {
     background-color: $main-color;
@@ -19,30 +27,78 @@ $text-color: #f5f5f1;
           div {
             a {
               color: $background-color;
-              &:hover{
+              &:hover {
                 text-decoration: none;
               }
-              .card{
-                .card-header{
+              .card {
+                .card-header {
                   text-transform: capitalize;
                 }
+                &:hover{
+                  animation-name: cardHover;
+                  animation-duration: 3s;
+                }
+                transition: 100%;
               }
-            }
-          }
-          &.types-checks {
-            border-radius: 5px;
-            margin: 10px 0;
-            background-color: $main-color;
-            label {
-              color: $text-color;
-            }
-            button {
-              background-color: $background-color;
-              border: 0;
+              
             }
           }
         }
       }
+      .row {
+        &.types-checks {
+          border-radius: 5px;
+          div {
+            form {
+              div.form-check {
+                label {
+                  color: $text-color;
+                }
+              }
+            }
+            button {
+              padding: 0.35em 1.2em;
+              border: 0.1em solid #ffffff;
+              margin: 0 0.3em 0.3em 0;
+              border-radius: 0.12em;
+              box-sizing: border-box;
+              text-decoration: none;
+              font-family: "Roboto", sans-serif;
+              font-weight: 300;
+              color: #ffffff;
+              text-align: center;
+              transition: all 0.2s;
+              background-image: linear-gradient(
+                to right,
+                #30cfd0 0%,
+                #330867 100%
+              );
+            }
+          }
+        }
+      }
+    }
+    .pagination{
+      margin: 0;
+      padding-bottom: 10px;
+      justify-content: center;
+      color: rgb(179, 179, 179);;
+      
+      font-size: 1rem;
+      li{
+        margin:0 5px;
+        &.selected{
+          color: $text-color;
+        }
+        &.previous, &.next{
+          border-bottom: 1px solid red;
+          margin: 0 10px;
+        }
+        &:hover{
+          color:$text-color
+        }
+      }
+      
     }
   }
 }
