@@ -91,12 +91,12 @@ const PokemonList = (props) => {
   return (
     <>
       <div className="row mb-2">
-        <div className="col-md-6 mx-auto">
+        {/* <div className="col-md-6 mx-auto">
           <input type="text" onChange={(e) => setSearch(e.target.value.toLowerCase())} />
           <button onClick={() => props.history.push(`/pokemon/${search}`)}>
             Search
           </button>
-        </div>
+        </div> */}
         <div className="row types-checks">
         <div className="col-md-12">
           <Form className="d-flex justify-content-center rounded flex-wrap">
@@ -139,7 +139,7 @@ const PokemonList = (props) => {
           </DropdownButton>
         </div>
       </div>
-      <div className="row">
+      <div className="row d-flex align-content-stretch">
         <div className="col">
 
           {ShowData()}
