@@ -25,7 +25,7 @@ const TYPE_COLORS = {
   water: "#3295F6",
 };
 
-const Pokemon = (props) => {
+const PokemonCard = (props) => {
   const pokemonName = props.pokemon;
   const dispatch = useDispatch();
   const pokemonState = useSelector((state) => state.Pokemon);
@@ -57,23 +57,28 @@ const Pokemon = (props) => {
               <span>{pokeData.name}</span>
               
               </div>
-            <div className="card-img-top ronded mx-auto mt-2">
-              <img src={pokeData.sprites.front_default} alt="" />
+            <div className="card-img-top ronded mt-2">
+              <img src={pokeData.sprites.front_default} alt={pokeData.name} />
             </div>
-            <div className="card-body">
+            <div className="card-body hidden">
               <ul>
+              {pokeData.types.map((el)=>{
+                return(
+                  <li key={el.type.name}>{el.type.name}</li>
+                )
+              })}
               {pokeData.stats.map((el) => {
                 return (
-                  <li key={el.stat.name}>{statsSwitch(el.stat.name)} {el.base_stat}</li>
+                  <li key={el.stat.name}>{el.stat.name} {el.base_stat}</li>
                 );
+              })}
+              
+              {pokeData.abilities.map((el) => {
+                return <li key={el.ability.name} className="abilities">{el.ability.name}</li>;
               })}
               </ul>
             </div>
-            <div className="card-body">
-              {pokeData.abilities.map((el) => {
-                return <p>{el.ability.name}</p>;
-              })}
-            </div>
+
           </div>
         </Link>
       );
@@ -104,4 +109,4 @@ const Pokemon = (props) => {
   )
 };
 
-export default Pokemon;
+export default PokemonCard;

@@ -2,6 +2,7 @@ $background-color: #202020;
 $main-color: #e50914;
 $main-back-color: #b81d24;
 $text-color: #f5f5f1;
+$transition:0.5s;
 
 $types: normal, fighting, flying, poison, ground, rock, bug, ghost, steel, fire,
   water, grass, electric, psychic, ice, dragon, dark, fairy;
@@ -50,6 +51,8 @@ $typesColors: (
   background-image: linear-gradient($start, $end);
   position: relative;
   z-index: 100;
+  transition: $transTime;
+  box-shadow: -10px 25px 50px;
   &:before {
     background-image: linear-gradient($end, $start);
     content: "";
@@ -63,7 +66,11 @@ $typesColors: (
     z-index: -100;
     transition: opacity $transTime;
   }
+  &::after{
+    filter: invert(1);
+  }
   &:hover {
+    transform: translateY(-20px);
     &:before {
       opacity: 1;
     }
@@ -71,9 +78,10 @@ $typesColors: (
 }
 #root{
   
+  height: 100%;
   background-color: $background-color;
   .App {
-  
+    font-family: 'Comfortaa', cursive;
     .navbar {
       background-color: $main-color;
       a {
@@ -93,35 +101,48 @@ $typesColors: (
   
                 @each $type in $types {
                   .#{$type} {
+                  
                     @include gradientAnimation(
                       map-get($typesColors, #{$type}-start),
                       map-get($typesColors, #{$type}-end),
-                      2s
+                      $transition
                     );
-                    &:hover {
-                      transition: 1s;
-                      transform: translateY(-20px);
-                      box-shadow: 0px 8px 3px 0px white;
-                    }
                   }
                 }
                 .card {
+                  &:hover .hidden{
+                    height: 270px;
+                  transform:translateY(0);
+                    opacity: 1;
+                    transition-duration: $transition;
+                  }
                   text-transform: capitalize;
+                  .card-img-top{
+                    img{display: flex;
+                      margin: 0 auto;}
+                    
+                  }
                   .card-header {
                     font-weight: bold;
-                    color: $text-color;
+                    color: $background-color;
                   }
                   .card-body {
                     ul {
                       list-style-type:none;
                       padding: 0;
-                      column-count: 3;
+                      margin: 0 auto;
                       li {
-                        i {
-                          color: white;
-                        }
+                        text-align: center;
                       }
                     }
+                  }
+                  .hidden{
+                    height: 0px;
+                  transform:translateY(40px);
+                   opacity: 0;
+                   overflow: hidden;
+                   padding: 0;
+                   transition: 1s;
                   }
                 }
               }
@@ -138,24 +159,6 @@ $typesColors: (
                     color: $text-color;
                   }
                 }
-              }
-              button {
-                padding: 0.35em 1.2em;
-                border: 0.1em solid #ffffff;
-                margin: 0 0.3em 0.3em 0;
-                border-radius: 0.12em;
-                box-sizing: border-box;
-                text-decoration: none;
-                font-family: "Roboto", sans-serif;
-                font-weight: 300;
-                color: #ffffff;
-                text-align: center;
-                transition: all 0.2s;
-                background-image: linear-gradient(
-                  to right,
-                  #30cfd0 0%,
-                  #330867 100%
-                );
               }
             }
           }

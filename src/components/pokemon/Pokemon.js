@@ -48,7 +48,7 @@ const Pokemon = (props) => {
             <h1>Stats</h1>
             {pokeData.stats.map((el) => {
               return (
-                <p>
+                <p key={el.stat.name}>
                   {el.stat.name} {el.base_stat}
                 </p>
               );
@@ -57,7 +57,7 @@ const Pokemon = (props) => {
           <div className="item">
             <h1>Abilities</h1>
             {pokeData.abilities.map((el) => {
-              return <p>{el.ability.name}</p>;
+              return <p key = {el.ability.name}>{el.ability.name}</p>;
             })}
           </div>
         </div>
