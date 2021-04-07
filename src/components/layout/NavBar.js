@@ -1,6 +1,5 @@
 import React from 'react';
 import {Navbar} from 'react-bootstrap';
-import logo from './logo.png';
 
 const NavBar=()=> {
     return (

@@ -78,6 +78,7 @@ $typesColors: (
   }
 }
   #root {
+    min-height: 100vh;
     background-color: $background-color;
     .App {
       font-family: "Comfortaa", cursive;
