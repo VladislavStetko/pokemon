@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import _, { set } from "lodash";
+import _ from "lodash";
 import { GetPokemonList, GetPokemonType } from "../actions/PokemonActions";
 import ReactPaginate from "react-paginate";
 import PokemonCard from "./PokemonCard";
@@ -30,7 +30,6 @@ const types = [
 ];
 
 const PokemonList = (props) => {
-  const [typesArray, setTypesAray] = useState([]);
   const checksArray = [];
   const [search, setSearch] = useState("");
   const [perid, setPer] = useState("10");
@@ -40,7 +39,7 @@ const PokemonList = (props) => {
   const pokemonType = useSelector((state) => state.PokemonType);
   React.useEffect(() => {
     FetchData(1);
-    FetchType();
+    FetchType(1);
   }, []);
 
   const FetchType = (pokemonFetchType) => {
@@ -56,7 +55,7 @@ const PokemonList = (props) => {
     const value = target.type === "checkbox" ? target.checked : target.value;
     if (value) {
       setType(true);
-      checksArray.push(e.target.id);
+      checksArray.push(e.target.id)
       FetchType(e.target.id);
     } else {
       let ind = checksArray.indexOf(e.target.id);
@@ -84,7 +83,6 @@ const PokemonList = (props) => {
       return (
         <div className={"row"}>
           {pokemonType.data.map((el) => {
-            console.log(el);
             return (
               <PokemonCard key={el.pokemon.name} pokemon={el.pokemon.name} />
             );
@@ -102,23 +100,22 @@ const PokemonList = (props) => {
 
   return (
     <>
-      <div className="row mb-2">
-        <div className="row mx-auto mt-3">
-          <div className="col-md-12">
+        <div className="row mt-3 search">
+          <div className="col-md-6">
             <form className="d-flex">
               <input
                 type="text"
                 onChange={(e) => setSearch(e.target.value.toLowerCase())}
               />
               <button
-                className="btn btn-light"
+                className="btn btn-light ml-2"
                 onClick={() => props.history.push(`/pokemon/${search}`)}
               >
                 Search
               </button>
             </form>
           </div>
-          <div className="col-md-12">
+          <div className="col-md-6">
             <DropdownButton
               variant="danger"
               alignRight
@@ -155,7 +152,6 @@ const PokemonList = (props) => {
             </Form>
           </div>
         </div>
-      </div>
       <div className="row d-flex align-content-stretch">
         <div className="col">{ShowData()}</div>
       </div>

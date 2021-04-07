@@ -22,14 +22,14 @@ export const GetPokemonList = (page,per) => async dispatch => {
   }
 };
 
-export const GetPokemon = (pokemon) => async dispatch => {
+export const GetPokemon = (pokemon,length) => async dispatch => {
   try {
     dispatch({
       type: "POKEMON_MULTIPLE_LOADING"
     });
-
+    // if(length>1)
+    // const results = [];
     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
-
     dispatch({
       type: "POKEMON_MULTIPLE_SUCCESS",
       payload: res.data,
@@ -48,7 +48,7 @@ export const GetPokemonType=(pokemonType)=>async dispatch=>{
   });
 
   const res = await axios.get(`https://pokeapi.co/api/v2/type/${pokemonType}`);
-
+  console.log(res.data.pokemon);
     dispatch({
       type: "POKEMON_TYPE_SUCCESS",
       payload: res.data,

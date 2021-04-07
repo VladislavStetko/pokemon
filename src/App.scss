@@ -2,7 +2,7 @@ $background-color: #202020;
 $main-color: #e50914;
 $main-back-color: #b81d24;
 $text-color: #f5f5f1;
-$transition:0.5s;
+$transition: 0.5s;
 
 $types: normal, fighting, flying, poison, ground, rock, bug, ghost, steel, fire,
   water, grass, electric, psychic, ice, dragon, dark, fairy;
@@ -52,7 +52,6 @@ $typesColors: (
   position: relative;
   z-index: 100;
   transition: $transTime;
-  box-shadow: -10px 25px 50px;
   &:before {
     background-image: linear-gradient($end, $start);
     content: "";
@@ -66,90 +65,91 @@ $typesColors: (
     z-index: -100;
     transition: opacity $transTime;
   }
-  &::after{
+  &::after {
     filter: invert(1);
   }
   &:hover {
+    box-shadow: 0px 10px 10px #3d3d3d;
     transform: translateY(-20px);
+    transition-delay: box-shadow $transition;
     &:before {
       opacity: 1;
     }
   }
 }
-#root{
-  
-  height: 100%;
-  background-color: $background-color;
-  .App {
-    font-family: 'Comfortaa', cursive;
-    .navbar {
-      background-color: $main-color;
-      a {
-        color: $text-color;
+  #root {
+    background-color: $background-color;
+    .App {
+      font-family: "Comfortaa", cursive;
+      nav {
+        a {
+          text-align: center;
+        }
       }
-    }
-    .container {
-      .row {
-        .col {
-          .row {
-            div {
-              a {
-                color: $background-color;
-                &:hover {
-                  text-decoration: none;
-                }
-  
-                @each $type in $types {
-                  .#{$type} {
-                  
-                    @include gradientAnimation(
-                      map-get($typesColors, #{$type}-start),
-                      map-get($typesColors, #{$type}-end),
-                      $transition
-                    );
+      .container {
+        .poke{
+          color:white;
+        }
+        .row {
+          .col {
+            .row {
+              div {
+                a {
+                  color: $background-color;
+                  &:hover {
+                    text-decoration: none;
                   }
-                }
-                .card {
-                  &:hover .hidden{
-                    height: 270px;
-                  transform:translateY(0);
-                    opacity: 1;
-                    transition-duration: $transition;
-                  }
-                  text-transform: capitalize;
-                  .card-img-top{
-                    img{display: flex;
-                      margin: 0 auto;}
-                    
-                  }
-                  .card-header {
-                    font-weight: bold;
-                    color: $background-color;
-                  }
-                  .card-body {
-                    ul {
-                      list-style-type:none;
-                      padding: 0;
-                      margin: 0 auto;
-                      li {
-                        text-align: center;
-                      }
+
+                  @each $type in $types {
+                    .#{$type} {
+                      @include gradientAnimation(
+                        map-get($typesColors, #{$type}-start),
+                        map-get($typesColors, #{$type}-end),
+                        $transition
+                      );
                     }
                   }
-                  .hidden{
-                    height: 0px;
-                  transform:translateY(40px);
-                   opacity: 0;
-                   overflow: hidden;
-                   padding: 0;
-                   transition: 1s;
+                  .card {
+                    &:hover .hidden {
+                      height: 270px;
+                      transform: translateY(0);
+                      opacity: 1;
+                      transition-duration: $transition;
+                    }
+                    text-transform: capitalize;
+                    .card-img-top {
+                      img {
+                        display: flex;
+                        margin: 0 auto;
+                      }
+                    }
+                    .card-header {
+                      font-weight: bold;
+                      color: $background-color;
+                    }
+                    .card-body {
+                      ul {
+                        list-style-type: none;
+                        padding: 0;
+                        margin: 0 auto;
+                        li {
+                          text-align: center;
+                        }
+                      }
+                    }
+                    .hidden {
+                      height: 0px;
+                      transform: translateY(40px);
+                      opacity: 0;
+                      overflow: hidden;
+                      padding: 0;
+                      transition: 1s;
+                    }
                   }
                 }
               }
             }
           }
-        }
-        .row {
           &.types-checks {
             border-radius: 5px;
             div {
@@ -162,30 +162,37 @@ $typesColors: (
               }
             }
           }
+          &.search {
+            margin: 10px 0;
+            div {
+              display: flex;
+              justify-content: center;
+            }
+          }
         }
-      }
-      .pagination {
-        margin: 0;
-        padding-bottom: 10px;
-        justify-content: center;
-        color: rgb(179, 179, 179);
-  
-        font-size: 1rem;
-        li {
-          margin: 0 5px;
-          &.selected {
-            color: $text-color;
-          }
-          &.previous,
-          &.next {
-            border-bottom: 1px solid red;
-            margin: 0 10px;
-          }
-          &:hover {
-            color: $text-color;
+        .pagination {
+          margin: 0;
+          padding-bottom: 10px;
+          justify-content: center;
+          color: rgb(179, 179, 179);
+
+          font-size: 1rem;
+          li {
+            margin: 0 5px;
+            &.selected {
+              color: $text-color;
+            }
+            &.previous,
+            &.next {
+              border-bottom: 1px solid red;
+              margin: 0 10px;
+            }
+            &:hover {
+              color: $text-color;
+            }
           }
         }
       }
     }
   }
-}
+
