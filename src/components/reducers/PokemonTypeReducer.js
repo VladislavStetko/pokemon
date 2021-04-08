@@ -19,7 +19,7 @@ const DefaultState = {
           loading: false,
           errorMsg: "unable to get pokemon"
         };
-      case "POKEMON_TYPE_SUCCESS":
+      case "POKEMON_TYPE_SUCCESS":{
         return {
           ...state,
           loading: false,
@@ -27,6 +27,8 @@ const DefaultState = {
           errorMsg: "",
           count: action.payload.count
         };
+      }
+        
       default:
         return state
     }

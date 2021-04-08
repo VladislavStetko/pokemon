@@ -1,6 +1,6 @@
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {GetPokemon} from "../actions/PokemonActions";
+import { useDispatch, useSelector } from "react-redux";
+import { GetPokemon } from "../actions/PokemonActions";
 import _ from "lodash";
 
 const TYPE_COLORS = {
@@ -35,32 +35,41 @@ const Pokemon = (props) => {
   const ShowData = () => {
     if (!_.isEmpty(pokemonState.data[pokemonName])) {
       const pokeData = pokemonState.data[pokemonName];
+      console.log(pokeData);
       return (
-        <div className={"pokemon-wrapper"}>
-          <div className={"item"}>
-            <h1>Sprites</h1>
-            <img src={pokeData.sprites.front_default} alt="" />
-            <img src={pokeData.sprites.back_default} alt="" />
-            <img src={pokeData.sprites.front_shiny} alt="" />
-            <img src={pokeData.sprites.back_shiny} alt="" />
+        <>
+          <div className="poke">
+            <div className="header">
+              <span className="id">{pokeData.id}</span>
+              <div className="name">{pokeData.name}</div>
+            </div>
+            <div className="row d-flex">
+              <div className="col-md-6">
+                <div className="images">
+                  <img
+                    src={`https://pokeres.bastionbot.org/images/pokemon/${pokeData.id}.png`}
+                    alt="front_pic"
+                  />
+                </div>
+                <div className="stats">
+                    {pokeData.stats.map((el) => {
+                      return <div className="progress">
+                      <div
+                      key={el.stat.name}
+                        className="progress-bar"
+                        role="progressbar"
+                        aria-valuenow={el.base_stat}
+                        aria-valuemin="0"
+                        aria-valuemax="200"
+                      ></div>
+                      </div>;
+                    })}
+                </div>
+              </div>
+              <div className="col-md-6"></div>
+            </div>
           </div>
-          <div className="item">
-            <h1>Stats</h1>
-            {pokeData.stats.map((el) => {
-              return (
-                <p key={el.stat.name}>
-                  {el.stat.name} {el.base_stat}
-                </p>
-              );
-            })}
-          </div>
-          <div className="item">
-            <h1>Abilities</h1>
-            {pokeData.abilities.map((el) => {
-              return <p key = {el.ability.name}>{el.ability.name}</p>;
-            })}
-          </div>
-        </div>
+        </>
       );
     }
 
@@ -75,11 +84,6 @@ const Pokemon = (props) => {
     return <p>error getting pokemon</p>;
   };
 
-  return (
-    <div className={"poke"}>
-      <h1>{pokemonName}</h1>
-      {ShowData()}
-    </div>
-  );
+  return <>{ShowData()}</>;
 };
 export default Pokemon;

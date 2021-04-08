@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetPokemon } from "../actions/PokemonActions";
 import _ from "lodash";
-import { Link } from "react-router-dom";
 
 const TYPE_COLORS = {
   bug: "#B1C12E",
@@ -49,7 +48,6 @@ const PokemonCard = (props) => {
     if (!_.isEmpty(pokemonState.data[pokemonName])) {
       const pokeData = pokemonState.data[pokemonName];
       return (
-        <Link to={`pokemon/${pokeData.name}`}>
           <div className={`card ${pokeData.types[0].type.name}`}
           >
             <div className="card-header">
@@ -62,17 +60,25 @@ const PokemonCard = (props) => {
             </div>
             <div className="card-body hidden">
               <ul>
+                <li className="card-li-header">Тип покемона</li>
               {pokeData.types.map((el)=>{
                 return(
-                  <li key={el.type.name}>{el.type.name}</li>
+                  <li 
+                  className={"types"}
+                  key={el.type.name} 
+                  style={{
+                    backgroundColor: `${TYPE_COLORS[el.type.name]}`
+                  }}
+                  >{el.type.name}</li>
                 )
               })}
+                <li className="card-li-header">Характеристики</li>
               {pokeData.stats.map((el) => {
                 return (
                   <li key={el.stat.name}>{el.stat.name} {el.base_stat}</li>
                 );
               })}
-              
+              <li className="card-li-header">Особливі навички</li>
               {pokeData.abilities.map((el) => {
                 return <li key={el.ability.name} className="abilities">{el.ability.name}</li>;
               })}
@@ -80,7 +86,6 @@ const PokemonCard = (props) => {
             </div>
 
           </div>
-        </Link>
       );
     }
 

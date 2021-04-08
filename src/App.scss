@@ -45,7 +45,6 @@ $typesColors: (
   fairy-start: #ddd6f3,
   fairy-end: #faaca8,
 );
-
 @mixin gradientAnimation($start, $end, $transTime) {
   background-size: 100%;
   background-image: linear-gradient($start, $end);
@@ -77,123 +76,121 @@ $typesColors: (
     }
   }
 }
-  #root {
-    min-height: 100vh;
-    background-color: $background-color;
-    .App {
-      font-family: "Comfortaa", cursive;
-      nav {
-        a {
-          text-align: center;
-        }
+#root {
+  min-height: 100vh;
+  background-color: $background-color;
+  .App {
+    font-family: "Comfortaa", cursive;
+    nav {
+      a {
+        text-align: center;
       }
-      .container {
-        .poke{
-          color:white;
-        }
-        .row {
-          .col {
-            .row {
-              div {
-                a {
-                  color: $background-color;
-                  &:hover {
-                    text-decoration: none;
-                  }
+    }
+    .container {
+      .row {
+        .col {
+          .row {
+            div {
+                color: $background-color;
+                &:hover {
+                  text-decoration: none;
+                }
 
-                  @each $type in $types {
-                    .#{$type} {
-                      @include gradientAnimation(
-                        map-get($typesColors, #{$type}-start),
-                        map-get($typesColors, #{$type}-end),
-                        $transition
-                      );
+                @each $type in $types {
+                  .#{$type} {
+                    @include gradientAnimation(
+                      map-get($typesColors, #{$type}-start),
+                      map-get($typesColors, #{$type}-end),
+                      $transition
+                    );
+                  }
+                }
+                .card {
+                  &:hover .hidden {
+                    height: 400px;
+                    transform: translateY(0);
+                    opacity: 1;
+                    transition-duration: $transition;
+                  }
+                  text-transform: capitalize;
+                  .card-img-top {
+                    img {
+                      display: flex;
+                      margin: 0 auto;
                     }
                   }
-                  .card {
-                    &:hover .hidden {
-                      height: 270px;
-                      transform: translateY(0);
-                      opacity: 1;
-                      transition-duration: $transition;
-                    }
-                    text-transform: capitalize;
-                    .card-img-top {
-                      img {
-                        display: flex;
-                        margin: 0 auto;
-                      }
-                    }
-                    .card-header {
-                      font-weight: bold;
-                      color: $background-color;
-                    }
-                    .card-body {
-                      ul {
-                        list-style-type: none;
-                        padding: 0;
-                        margin: 0 auto;
-                        li {
-                          text-align: center;
+                  .card-header {
+                    font-weight: bold;
+                    color: $background-color;
+                  }
+                  .card-body {
+                    ul {
+                      list-style-type: none;
+                      padding: 0;
+                      margin: 0 auto;
+                      li {
+                        text-align: center;
+                        &.card-li-header {
+                          margin: 5px 0;
+                          text-decoration: underline;
                         }
                       }
                     }
-                    .hidden {
-                      height: 0px;
-                      transform: translateY(40px);
-                      opacity: 0;
-                      overflow: hidden;
-                      padding: 0;
-                      transition: 1s;
-                    }
+                  }
+                  .hidden {
+                    height: 0px;
+                    transform: translateY(40px);
+                    opacity: 0;
+                    overflow: hidden;
+                    padding: 0;
+                    transition: 1s;
                   }
                 }
-              }
-            }
-          }
-          &.types-checks {
-            border-radius: 5px;
-            div {
-              form {
-                div.form-check {
-                  label {
-                    color: $text-color;
-                  }
-                }
-              }
-            }
-          }
-          &.search {
-            margin: 10px 0;
-            div {
-              display: flex;
-              justify-content: center;
             }
           }
         }
-        .pagination {
-          margin: 0;
-          padding-bottom: 10px;
-          justify-content: center;
-          color: rgb(179, 179, 179);
+        &.types-checks {
+          border-radius: 5px;
+          div {
+            form {
+              div.form-check {
+                label {
+                  color: $text-color;
+                }
+              }
+            }
+          }
+        }
+        &.search {
+          margin: 10px 0;
+          div {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+      .pagination {
+        margin: 0;
+        padding-bottom: 10px;
+        justify-content: center;
+        color: rgb(179, 179, 179);
 
-          font-size: 1rem;
-          li {
-            margin: 0 5px;
-            &.selected {
-              color: $text-color;
-            }
-            &.previous,
-            &.next {
-              border-bottom: 1px solid red;
-              margin: 0 10px;
-            }
-            &:hover {
-              color: $text-color;
-            }
+        font-size: 1rem;
+        li {
+          margin: 0 5px;
+          &.selected {
+            color: $text-color;
+          }
+          &.previous,
+          &.next {
+            border-bottom: 1px solid red;
+            margin: 0 10px;
+          }
+          &:hover {
+            color: $text-color;
           }
         }
       }
     }
   }
-
+}
