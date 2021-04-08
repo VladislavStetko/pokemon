@@ -31,6 +31,7 @@ const types = [
 
 const PokemonList = (props) => {
   const [checksArray, setChecksArray] = useState([]);
+  const [currTypePage, setCurrTypePage] = useState(0);
   const [perid, setPer] = useState("10");
   const [type, setType] = useState(false);
   const typesPer = [];
@@ -40,7 +41,7 @@ const PokemonList = (props) => {
   const pokemonType = useSelector((state) => state.PokemonType);
   React.useEffect(() => {
     FetchData(1);
-    FetchType();
+    FetchType(1);
   }, []);
 
   const FetchType = (pokemonFetchType) => {
@@ -67,24 +68,35 @@ const PokemonList = (props) => {
     }
   };
 
+  const ShowTypeByPage = () => {
+    var tmp = [];
+    for (var i = perid * currTypePage; i < perid * (currTypePage + 1); i++) {
+      if (!_.isEmpty(typesPer[i])) tmp.push(typesPer[i]);
+    }
+    return (
+      <>
+        {tmp.map((el) => (
+          el.name.includes(filter) &&
+          <PokemonCard key={el.name} pokemon={el.name} />
+        ))}
+      </>
+    );
+  };
+
   const ShowData = () => {
     if (pokemonList.loading) {
       return <p>Loading...</p>;
     }
-    if (!pokemonType.loading){
-      var tmp =[]
-      pokemonType.data.map((el)=>{
-        tmp.push(el.pokemon.name)
-      }
-      )
-      typesPer.push( _.chunk(tmp,perid));
-      console.log(typesPer[0]);
+    if (!pokemonType.loading) {
+      pokemonType.data.map((el) => {
+        typesPer.push({name:el.pokemon.name});
+      });
     }
     if (!_.isEmpty(pokemonList.data) && type === false) {
       return (
         <div className={"row"}>
           {pokemonList.data.map(
-            (el, index) =>
+            (el) =>
               el.name.includes(filter) && (
                 <PokemonCard key={el.name} pokemon={el.name} />
               )
@@ -92,18 +104,7 @@ const PokemonList = (props) => {
         </div>
       );
     } else if (type === true) {
-      return (
-        <div className={"row"}>
-          {/* {pokemonType.data.map((el) =>(el.pokemon.name.includes(filter))&& (
-            
-              <PokemonCard key={el.pokemon.name} pokemon={el.pokemon.name} />
-            )  
-          )} */}
-          {
-            
-          }
-        </div>
-      );
+      return <div className={"row"}>{ShowTypeByPage()}</div>;
     }
     if (pokemonList.errorMsg !== "") {
       return <p>{pokemonList.errorMsg}</p>;
@@ -122,12 +123,6 @@ const PokemonList = (props) => {
               type="text"
               onChange={(e) => setFilter(e.target.value.toLowerCase())}
             />
-            {/* <button
-              className="btn btn-light ml-2"
-              onClick={() => props.history.push(`/pokemon/${search}`)}
-            >
-              Search
-            </button> */}
           </form>
         </div>
         <div className="col-md-6">
@@ -137,7 +132,7 @@ const PokemonList = (props) => {
             title="Кількість покемонів"
             id="dropdown-menu-align-right"
             onSelect={(e) => {
-              setType(false);
+              setCurrTypePage(0);
               FetchData(1, e);
               setPer(e);
             }}
@@ -183,9 +178,7 @@ const PokemonList = (props) => {
           pageCount={Math.ceil(pokemonType.data.length / perid)}
           pageRangeDisplayed={2}
           marginPagesDisplayed={1}
-          onPageChange={(data) => {
-
-          }}
+          onPageChange={(data) => setCurrTypePage(data.selected)}
           containerClassName={"pagination"}
         />
       )}
